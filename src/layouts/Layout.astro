@@ -14,6 +14,8 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
 		<title>{title}</title>
 	</head>
 	<body class="flex justify-center items-center h-[100vh] overflow-hidden">
@@ -25,5 +27,6 @@ const { title } = Astro.props;
 		font-family: system-ui, sans-serif;
 		background: #13151a;
 		color: white;
+		touch-action: none;
 	}
 </style>
