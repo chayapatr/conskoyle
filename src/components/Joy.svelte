@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte'
-	import { slide } from 'svelte/transition'
 	import { pinch, rotate } from 'svelte-gestures'
 
 	export let x = 0
