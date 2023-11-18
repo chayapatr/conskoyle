@@ -8,7 +8,7 @@
 	let el
 	let drag = false
 	let dp = {}
-    let cors = []
+	let cors = []
 
 	let data
 	let scale = 1
@@ -37,13 +37,13 @@
 	const g = (e) => {
 		const touch = e.touches[0]
 
-        // if(e.touches.length === 2) {
-        //     cors = [[e.touches[0].pageX, e.touches[0].pageY], [e.touches[1].pageX, e.touches[1].pageY]]
-        // }
-        cors = []
-        for(let i=0;i<e.touches.length;i++) {
-            cors = [...cors, [e.touches[i].pageX, e.touches[i].pageY]]
-        }
+		// if(e.touches.length === 2) {
+		//     cors = [[e.touches[0].pageX, e.touches[0].pageY], [e.touches[1].pageX, e.touches[1].pageY]]
+		// }
+		cors = []
+		for (let i = 0; i < e.touches.length; i++) {
+			cors = [...cors, [e.touches[i].pageX, e.touches[i].pageY]]
+		}
 
 		if (previousTouch) {
 			// be aware that these only store the movement of the first touch in the touches array
@@ -117,9 +117,9 @@
 	const range = (min, x, max) => {
 		return Math.min(Math.max(min, x), max)
 	}
-    const length = (x1, x2, y1, y2) => {
-        return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2))
-    }
+	const length = (x1, x2, y1, y2) => {
+		return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+	}
 </script>
 
 <svelte:window
@@ -127,29 +127,37 @@
 	on:touchend={() => {
 		drag = false
 		previousTouch = undefined
-        cors = []
+		cors = []
 	}}
-    on:resize={() => {dp = {
-        w: document.documentElement.clientWidth,
-        h: document.documentElement.clientHeight,
-        sh: document.documentElement.scrollHeight
-    }}}
+	on:resize={() => {
+		dp = {
+			w: document.documentElement.clientWidth,
+			h: document.documentElement.clientHeight,
+			sh: document.documentElement.scrollHeight
+		}
+	}}
 />
 
 {#each cors as cor}
-    <div class="absolute w-12 aspect-square bg-neutral-50/20 border rounded-full" style={`top:${cor[1]}px;left:${cor[0]}px`}/>
-    <div 
-        class="absolute"
-        style={`
+	<div
+		class="absolute w-12 aspect-square bg-neutral-50/20 border rounded-full"
+		style={`top:${cor[1]}px;left:${cor[0]}px`}
+	/>
+	<div
+		class="absolute"
+		style={`
             background-color: #eee;
             opacity: 0.5;
             height: 1px;
-            width: ${length(cor[0], x+24, cor[1], y+24)}px;
-            left: ${cor[0]+24}px;
-            top: ${cor[1]+24}px;
+            width: ${length(cor[0], x + 24, cor[1], y + 24)}px;
+            left: ${cor[0] + 24}px;
+            top: ${cor[1] + 24}px;
             transform-origin: left;
-            transform: rotate(${Math.atan2(y + 24 - cor[1], x + 24 - cor[0]) * 180 / Math.PI}deg);
-        `}>{Math.floor(Math.atan2(y + 24 - cor[1], x + 24 - cor[0]) * 180 / Math.PI * 1000) / 1000}</div>
+            transform: rotate(${(Math.atan2(y + 24 - cor[1], x + 24 - cor[0]) * 180) / Math.PI}deg);
+        `}
+	>
+		{Math.floor(((Math.atan2(y + 24 - cor[1], x + 24 - cor[0]) * 180) / Math.PI) * 1000) / 1000}
+	</div>
 {/each}
 <div
 	style={`background-color: rgba(${(x / dp.w) * 255}, ${(y / dp.h) * 255}, ${
@@ -164,17 +172,17 @@
 	<div
 		class={`relative hover:cursor-grab select-none w-[100vw] h-[100vh] flex justify-center items-center`}
 		bind:this={el}
-        on:touchstart={() => (drag = true)}
-			use:pinch
-			on:pinch={pinchHandler}
-			on:pinchup={() => {
-				prevScale = scale
-			}}
-			use:rotate
-			on:rotate={rotateHandler}
-			on:rotateup={() => {
-				prevRotation = rotation
-			}}
+		on:touchstart={() => (drag = true)}
+		use:pinch
+		on:pinch={pinchHandler}
+		on:pinchup={() => {
+			prevScale = scale
+		}}
+		use:rotate
+		on:rotate={rotateHandler}
+		on:rotateup={() => {
+			prevRotation = rotation
+		}}
 	>
 		<div
 			class="absolute h-24 aspect-square bg-neutral-50/50 rounded-full flex justify-center items-center border"
